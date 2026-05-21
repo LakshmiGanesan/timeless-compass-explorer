@@ -293,6 +293,80 @@ html { scroll-behavior: smooth; }
   }
 }
 
+
+/* ---------- Mobile selected-study modal ---------- */
+.mobile-study-modal{
+  display:none;
+}
+@media (max-width: 760px){
+  .mobile-study-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.48);
+    z-index:10000;
+    padding:14px;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .mobile-study-modal.open{
+    display:flex;
+  }
+  .mobile-study-sheet{
+    width:100%;
+    max-height:86vh;
+    overflow:auto;
+    background:#fff;
+    border-radius:20px 20px 14px 14px;
+    box-shadow:0 -12px 40px rgba(15,23,42,.28);
+    padding:14px;
+    animation:studySheetUp .18s ease-out;
+  }
+  @keyframes studySheetUp{
+    from{ transform:translateY(18px); opacity:.75; }
+    to{ transform:translateY(0); opacity:1; }
+  }
+  .mobile-study-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    border-bottom:1px solid #e5e7eb;
+    padding-bottom:10px;
+    margin-bottom:10px;
+    position:sticky;
+    top:0;
+    background:#fff;
+    z-index:1;
+  }
+  .mobile-study-header strong{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:#475467;
+  }
+  .mobile-study-close{
+    border:1px solid #d0d5dd;
+    background:#f8fafc;
+    color:#111827;
+    border-radius:999px;
+    padding:7px 11px;
+    font-size:13px;
+    font-weight:700;
+  }
+  .mobile-study-content .detail,
+  .mobile-study-content .side-panel,
+  .mobile-study-content .study-panel{
+    display:block !important;
+    margin:0 !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 !important;
+  }
+  body.modal-open{
+    overflow:hidden;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -678,9 +752,72 @@ document.getElementById("clearBtn").onclick = () => {
   chartCountryFilter = "";
   applyFilters();
 };
+
+function isMobileView(){
+  return window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
+}
+function getStudyDetailElement(){
+  return document.querySelector(".detail, .side-panel, .study-panel, aside");
+}
+function openMobileStudyModal(){
+  if(!isMobileView()) return;
+  const modal = document.getElementById("mobileStudyModal");
+  const content = document.getElementById("mobileStudyContent");
+  const detail = getStudyDetailElement();
+  if(!modal || !content || !detail) return;
+
+  content.innerHTML = detail.innerHTML;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.classList.add("modal-open");
+}
+function closeMobileStudyModal(){
+  const modal = document.getElementById("mobileStudyModal");
+  if(!modal) return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+  document.body.classList.remove("modal-open");
+}
+function initMobileStudyModal(){
+  const closeBtn = document.getElementById("mobileStudyClose");
+  const modal = document.getElementById("mobileStudyModal");
+  if(closeBtn) closeBtn.onclick = closeMobileStudyModal;
+  if(modal){
+    modal.addEventListener("click", e => {
+      if(e.target === modal) closeMobileStudyModal();
+    });
+  }
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape") closeMobileStudyModal();
+  });
+}
+
+
+function initMobileTableModalFallback(){
+  document.addEventListener("click", e => {
+    const row = e.target.closest("tbody tr");
+    if(row && isMobileView()){
+      setTimeout(openMobileStudyModal, 40);
+    }
+  });
+}
+
+initMobileStudyModal();
+initMobileTableModalFallback();
 initFilters();
 render();
 </script>
+
+
+<div class="mobile-study-modal" id="mobileStudyModal" aria-hidden="true">
+  <div class="mobile-study-sheet" role="dialog" aria-modal="true" aria-label="Selected study details">
+    <div class="mobile-study-header">
+      <strong>Selected study</strong>
+      <button class="mobile-study-close" id="mobileStudyClose" type="button">Close</button>
+    </div>
+    <div class="mobile-study-content" id="mobileStudyContent"></div>
+  </div>
+</div>
 
 <footer class="site-footer" style="margin-top:48px;padding:20px 16px;text-align:center;font-size:0.9rem;color:#5f6b5f;border-top:1px solid rgba(95,107,95,0.18);">
   © 2026 SSIAR | research.artofliving.org | CC BY 4.0
