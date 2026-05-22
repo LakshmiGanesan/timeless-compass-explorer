@@ -89,7 +89,14 @@ select{width:100%;padding:11px;border:1px solid #cfd8e3;border-radius:9px;backgr
 }
 
 
-/* --- header About/Help hover cards --- */
+/* --- header About/Help hover cards ---
+   Purpose:
+   - Gives users quick contextual guidance without changing the dashboard layout.
+   - Keeps click alerts for touch devices where hover is not available.
+   Transfer notes:
+   - Edit the copy in headerTooltipCopy below to update the hover cards.
+   - Edit aboutBtn.onclick/helpBtn.onclick to update the click alerts.
+--- */
 .header-tooltip {
   position: fixed;
   z-index: 80;
@@ -128,7 +135,7 @@ select{width:100%;padding:11px;border:1px solid #cfd8e3;border-radius:9px;backgr
 <body>
 <header class="header">
   <div class="brand"><h1>Timeless Compass Explorer 2.0</h1><div class="subtitle">Explore published research on Ancient Systems of Knowledge.</div></div>
-  <div class="head-actions"><button class="pillbtn" id="aboutBtn">About</button><button class="pillbtn" id="helpBtn">Help</button><div class="total"><small>Total Publications</small><b id="totalHeader">0</b></div></div>
+  <div class="head-actions"><button class="pillbtn" id="aboutBtn" title="About this resource: learn what Timeless Compass Explorer 2.0 covers and who curated it.">About</button><button class="pillbtn" id="helpBtn" title="How to use this dashboard: filters, charts, active filters, and study rows.">Help</button><div class="total"><small>Total Publications</small><b id="totalHeader">0</b></div></div>
 </header>
 <div class="command">
   <input id="searchInput" class="search" placeholder="Search title / abstract / author / keyword…" />
@@ -307,7 +314,13 @@ aboutBtn.onclick=()=>alert("About this resource\n\nCurated by the Sri Sri Instit
 helpBtn.onclick=()=>alert("How to use this dashboard\n\nUse the filters, search bar, and charts to explore the evidence base. Click any chart element to filter the database. Active filters appear below the charts and can be removed one at a time using the \u00d7. Click a database row to open the selected study view with study-level details and the published-study link.");
 detailPanel.addEventListener("click",e=>{if(e.target===detailPanel && innerWidth<1100) detailPanel.classList.remove("open")});
 
-/* header About/Help hover cards */
+/* header About/Help hover cards
+   Learning notes:
+   1. A single reusable tooltip element is created and attached to the page.
+   2. The copy object stores the About and Help text in one easy-to-transfer place.
+   3. showHeaderTooltip() positions the card under the active button.
+   4. Mouse, keyboard focus, blur, and scroll events keep the behaviour accessible and tidy.
+*/
 const headerTooltip = document.createElement("div");
 headerTooltip.className = "header-tooltip";
 document.body.appendChild(headerTooltip);
@@ -350,6 +363,15 @@ aboutBtn.addEventListener("blur", hideHeaderTooltip);
 helpBtn.addEventListener("blur", hideHeaderTooltip);
 window.addEventListener("scroll", hideHeaderTooltip, {passive:true});
 
+/*
+Quick transfer guide for future editors:
+- Data lives in the embedded DATA array/object above.
+- Filter controls are populated by populateFilters().
+- render() refreshes charts, active filters, database rows, and selected-study state.
+- Chart clicks add filters; active filter chips remove them.
+- Database row clicks open the selected study panel with study-level details.
+- Header About/Help guidance is handled by the hover-card block above.
+*/
 populateFilters(); render();
 d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json").then(w=>{worldLand=topojson.feature(w,w.objects.land); renderMap();}).catch(()=>renderMap());
 </script>
