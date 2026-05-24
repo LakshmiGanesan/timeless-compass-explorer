@@ -239,36 +239,179 @@ td.col-journal{font-size:11.5px}
 
 /* RESPONSIVE */
 @media(max-width:1200px){.scorecard-row{grid-template-columns:repeat(4,1fr)}.scorecard-row .scard:nth-child(n+5){display:none}.charts-row{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:960px){
-  #mob-tabs{display:flex}
-  #ctrl-bar{top:62px;padding:.5rem .9rem;gap:.4rem;flex-wrap:wrap}
-  .search-outer{flex-basis:100%;order:-1}
-  #main{padding:.85rem .9rem 2rem}
-  .bottom-row{grid-template-columns:1fr}
-  .micro-card{display:none}
-  .micro-card.mob-visible{display:flex;position:static;width:100%}
-  .db-card{width:100%;overflow-x:hidden}
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{min-width:420px}
-  .scorecard-row{grid-template-columns:repeat(3,1fr)}
-  .scorecard-row .scard:nth-child(n+4){display:none}
-  .charts-row{grid-template-columns:1fr 1fr}
-  .hdr-sub{display:none}
-  #footer .footer-views{flex-direction:column;align-items:flex-start;gap:.35rem}
-  #footer .footer-links{display:none}
-  .cta-btn{height:50px;font-size:14px}
+/* ── TABLET ≤ 1200px ────────────────────────────────────────── */
+@media(max-width:1200px){
+  .scorecard-row{grid-template-columns:repeat(4,1fr)}
+  .scorecard-row .scard:nth-child(n+5){display:none}
+  .charts-row{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ── MOBILE / SMALL TABLET ≤ 960px ─────────────────────────── */
+@media(max-width:960px){
+  /* Show mobile tabs */
+  #mob-tabs{display:flex}
+
+  /* Control bar: wrap search to full width */
+  #ctrl-bar{top:62px;padding:.55rem .9rem;gap:.4rem;flex-wrap:wrap}
+  .search-outer{flex-basis:100%;order:-1;max-width:100%}
+  .adv-btn,.reset-btn{font-size:11.5px;padding:0 .75rem}
+
+  /* Main padding */
+  #main{padding:.9rem .9rem 5rem}
+
+  /* Bottom row: single column, desktop micro-card hidden */
+  .bottom-row{grid-template-columns:1fr;gap:.75rem}
+  .micro-card{display:none !important}
+
+  /* Database card: full width, no horizontal overflow */
+  .db-card{width:100%}
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  table{min-width:480px;font-size:12px}
+  thead th{padding:.42rem .65rem;font-size:8.5px}
+  tbody td{padding:.45rem .65rem}
+  td.col-journal{display:none} /* hide journal col on mobile to reduce clutter */
+
+  /* Scorecards: 3 visible */
+  .scorecard-row{grid-template-columns:repeat(3,1fr);gap:.45rem}
+  .scorecard-row .scard:nth-child(n+4){display:none}
+  .scard{padding:.7rem .5rem .6rem}
+  .scard-val{font-size:1.4rem}
+
+  /* Charts: 2 per row, taller for touch */
+  .charts-row{grid-template-columns:1fr 1fr;gap:.65rem}
+  .chart-card{padding:.8rem .8rem .65rem}
+  .chart-canvas-wrap canvas{touch-action:manipulation}
+
+  /* Header */
+  .hdr-sub{display:none}
+
+  /* Active filters: allow more wrapping */
+  .af-bar{min-height:38px;padding:.5rem .75rem}
+
+  /* Footer */
+  #footer{padding:.65rem .9rem}
+  #footer .footer-views{flex-direction:column;align-items:flex-start;gap:.3rem;font-size:11px}
+  #footer .footer-links{display:none}
+
+  /* CTA in worm sheet: bigger tap target */
+  .cta-btn{height:52px;font-size:14px;letter-spacing:.05em}
+}
+
+/* ── SMALL MOBILE ≤ 640px ───────────────────────────────────── */
 @media(max-width:640px){
   #header{padding:0 .9rem;height:56px}
+  .hdr-title{font-size:1rem}
   .total-pill{display:none}
-  .hdr-title{font-size:1.05rem}
-  .scorecard-row{grid-template-columns:repeat(2,1fr)}
-  .scorecard-row .scard:nth-child(n+3){display:none}
-  .charts-row{grid-template-columns:1fr}
-  #ctrl-bar{top:56px}
+  #ctrl-bar{top:56px;padding:.45rem .75rem}
   #mob-tabs{top:56px}
-  .vt-btn{padding:0 .65rem;font-size:11px}
+
+  /* Scorecards: 2 visible */
+  .scorecard-row{grid-template-columns:repeat(2,1fr);gap:.4rem}
+  .scorecard-row .scard:nth-child(n+3){display:none}
+  .scard-val{font-size:1.3rem}
+
+  /* Charts: 1 per row, give them breathing room */
+  .charts-row{grid-template-columns:1fr;gap:.6rem}
+  .chart-card{padding:.85rem .85rem .7rem}
+  .chart-canvas-wrap{height:140px !important}
+  #map-wrap{height:140px}
+
+  /* Scrollable table */
+  table{min-width:380px;font-size:11.5px}
+
+  /* View toggle: compact */
+  .vt-btn{padding:0 .6rem;font-size:11px}
+
+  /* Advanced search panel: full-width */
+  #adv-panel{width:calc(100vw - 1.5rem);left:-0.5rem}
+  .adv-grid{grid-template-columns:1fr 1fr}
+
+  /* Worm sheet: nearly full screen */
+  #worm-sheet{max-height:90vh}
 }
+
+/* ── WORM SHEET COMPONENTS ──────────────────────────────────── */
+.worm-sheet-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:.75rem;
+  padding-bottom:.65rem;
+  border-bottom:1px solid var(--rule);
+}
+.worm-sheet-lbl{
+  font-size:8.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  color:var(--text-faint);
+}
+.worm-sheet-title{
+  font-size:.85rem;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:.02em;
+}
+.worm-back-btn{
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+  height:36px;
+  padding:0 .9rem;
+  background:var(--paper2);
+  border:1.5px solid var(--rule);
+  border-radius:var(--r8);
+  font-family:var(--font-body);
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-mid);
+  cursor:pointer;
+  transition:all var(--t);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.worm-back-btn:hover{background:var(--paper3);border-color:var(--rule-mid)}
+
+/* ── MOB TAB BAR ─────────────────────────────────────────────── */
+#mob-tabs{
+  display:none;
+  background:var(--indigo-mid);
+  border-bottom:1px solid var(--hdr-border);
+  position:sticky;
+  top:62px;
+  z-index:480;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.mob-tab{
+  flex:1;
+  padding:.52rem .35rem .42rem;
+  text-align:center;
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:rgba(255,255,255,.42);
+  cursor:pointer;
+  border-bottom:2.5px solid transparent;
+  transition:all var(--t);
+  background:none;
+  border-left:none;border-right:none;border-top:none;
+  font-family:var(--font-body);
+}
+.mob-tab.active{color:var(--gold-lt);border-bottom-color:var(--gold);background:rgba(232,160,32,.07)}
+.mob-tab-icon{display:block;font-size:17px;margin-bottom:2px}
+
+/* ── MOBILE MESO TAP HINT ────────────────────────────────────── */
+.mob-tap-hint{
+  display:none;
+  text-align:center;
+  font-size:11px;
+  color:var(--text-faint);
+  font-style:italic;
+  padding:.45rem 0 .15rem;
+  letter-spacing:.02em;
+}
+@media(max-width:960px){.mob-tap-hint{display:block}}
 </style>
 </head>
 <body>
@@ -347,14 +490,12 @@ td.col-journal{font-size:11.5px}
 <div id="worm-overlay" onclick="closeMobWorm()"></div>
 <div id="worm-sheet">
   <div class="sheet-handle"></div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;padding-bottom:.65rem;border-bottom:1px solid var(--border)">
+  <div class="worm-sheet-header">
     <div>
-      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted)">Micro View</div>
-      <div style="font-size:.82rem;font-weight:700;color:var(--navy)">SELECTED STUDY</div>
+      <div class="worm-sheet-lbl">Micro View</div>
+      <div class="worm-sheet-title">SELECTED STUDY</div>
     </div>
-    <button onclick="closeMobWorm()" style="display:flex;align-items:center;gap:.35rem;height:34px;padding:0 .85rem;background:var(--surf2);border:1.5px solid var(--border);border-radius:var(--r8);font-family:var(--font-body);font-size:12px;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all .15s" onmouseover="this.style.background='var(--surf3)'" onmouseout="this.style.background='var(--surf2)'">
-      ← Back to Database
-    </button>
+    <button class="worm-back-btn" onclick="closeMobWorm()">← Back to Database</button>
   </div>
   <div id="worm-sheet-body"></div>
 </div>
@@ -518,6 +659,7 @@ td.col-journal{font-size:11.5px}
           <tbody id="table-body"></tbody>
         </table>
       </div>
+      <div class="mob-tap-hint">Tap a row to preview the study</div>
       <div class="db-footer">
         <div class="rpp-wrap">
           <span>Rows per page:</span>
@@ -829,16 +971,28 @@ function onRPP(v){ S.rpp=parseInt(v); S.page=1; renderTable(); }
    SELECT STUDY (MICRO VIEW)
    ───────────────────────────────────────── */
 function selectStudy(id){
-  S.selId=id;
-  const p=RAW.find(r=>r.id===id);
-  const html=p?buildMicroHTML(p):'';
-  $('#micro-body').innerHTML=html;
-  $('#worm-sheet-body').innerHTML=html;
-  renderTable(); // re-highlight row
-  // mobile: switch to micro tab and open sheet
-  if(window.innerWidth<960){
-    mobTab('micro');
+  S.selId = id;
+  const p = RAW.find(r => r.id === id);
+  const html = p ? buildMicroHTML(p) : '';
+
+  // Update desktop micro panel
+  const microBody = document.getElementById('micro-body');
+  if(microBody) microBody.innerHTML = html;
+
+  // Update mobile bottom sheet
+  const sheetBody = document.getElementById('worm-sheet-body');
+  if(sheetBody) sheetBody.innerHTML = html;
+
+  // Re-render table to update row highlight
+  renderTable();
+
+  // Mobile: open the bottom sheet
+  if(window.innerWidth < 960){
     openMobWorm();
+    // Switch Micro tab to active state (visual only)
+    document.querySelectorAll('.mob-tab[data-tab]').forEach(t=>t.classList.remove('active'));
+    const microTab = document.querySelector('.mob-tab[data-tab="micro"]');
+    if(microTab) microTab.classList.add('active');
   }
 }
 
@@ -1138,11 +1292,20 @@ function renderPartnerChart(){
    VIEW TOGGLE
    ───────────────────────────────────────── */
 function setView(v){
-  S.view=v;
-  const macroSec=document.getElementById('macro-section');
-  document.getElementById('vt-all').classList.toggle('active',v==='all');
-  document.getElementById('vt-db').classList.toggle('active',v==='database');
-  if(macroSec) macroSec.style.display=v==='all'?'':'none';
+  S.view = v;
+  document.getElementById('vt-all').classList.toggle('active', v==='all');
+  document.getElementById('vt-db').classList.toggle('active', v==='database');
+
+  if(window.innerWidth < 960){
+    // On mobile, setView just records preference; tabs control visibility
+    // Switch to appropriate tab
+    if(v === 'database') mobTab('meso');
+    else mobTab('macro');
+  } else {
+    // Desktop: show/hide macro section
+    const macroSec = document.getElementById('macro-section');
+    if(macroSec) macroSec.style.display = (v==='all') ? '' : 'none';
+  }
   renderTable();
 }
 
@@ -1150,25 +1313,46 @@ function setView(v){
    MOBILE
    ───────────────────────────────────────── */
 function mobTab(tab){
-  S.mobTab=tab;
+  S.mobTab = tab;
+  // Update tab indicators
   document.querySelectorAll('.mob-tab[data-tab]').forEach(t=>t.classList.remove('active'));
-  const el=document.querySelector('.mob-tab[data-tab="'+tab+'"]');
-  if(el) el.classList.add('active');
-  const macroSec=document.getElementById('macro-section');
-  const dbCard=document.querySelector('.db-card');
-  const microCard=document.getElementById('micro-card');
-  // Always show on desktop regardless of tab
-  if(window.innerWidth>=960) return;
-  // Mobile: show/hide sections
-  if(macroSec) macroSec.style.display=(tab==='macro')?'':'none';
-  if(dbCard) dbCard.style.display=(tab==='meso')?'':'none';
-  if(microCard){
-    if(tab==='micro'){
-      microCard.style.display='flex';
-      microCard.classList.add('mob-visible');
+  const activeTab = document.querySelector('.mob-tab[data-tab="'+tab+'"]');
+  if(activeTab) activeTab.classList.add('active');
+
+  // Desktop: do nothing — all panels always visible
+  if(window.innerWidth >= 960) return;
+
+  const macroSec = document.getElementById('macro-section');
+  const dbCard   = document.querySelector('.db-card');
+  const microCard= document.getElementById('micro-card');
+  const ctrlBar  = document.getElementById('ctrl-bar');
+
+  // Hide all panels first
+  if(macroSec)  macroSec.style.display  = 'none';
+  if(dbCard)    dbCard.style.display    = 'none';
+  if(microCard){microCard.style.display = 'none'; microCard.classList.remove('mob-visible');}
+
+  // Show the active panel
+  if(tab === 'macro'){
+    if(macroSec) macroSec.style.display = '';
+  }
+  if(tab === 'meso'){
+    if(dbCard) dbCard.style.display = '';
+    // Scroll to top of db on tab switch
+    const ts = document.querySelector('.table-scroll');
+    if(ts) ts.scrollTop = 0;
+  }
+  if(tab === 'micro'){
+    // Micro on mobile opens as bottom sheet, not inline
+    // If a study is selected, open the sheet; else show db
+    if(S.selId){
+      if(dbCard) dbCard.style.display = '';
+      openMobWorm();
     } else {
-      microCard.style.display='none';
-      microCard.classList.remove('mob-visible');
+      // No study selected: go to meso instead
+      if(dbCard) dbCard.style.display = '';
+      const mesoTab = document.querySelector('.mob-tab[data-tab="meso"]');
+      if(mesoTab){ mesoTab.classList.add('active'); activeTab&&activeTab.classList.remove('active'); }
     }
   }
 }
@@ -1182,12 +1366,28 @@ function closeDrawer(){
   document.getElementById('flt-drawer').classList.remove('is-open');
 }
 function openMobWorm(){
-  document.getElementById('worm-overlay').style.display='block';
-  document.getElementById('worm-sheet').classList.add('is-open');
+  const overlay = document.getElementById('worm-overlay');
+  const sheet   = document.getElementById('worm-sheet');
+  if(overlay) overlay.style.display = 'block';
+  if(sheet){
+    sheet.classList.add('is-open');
+    sheet.scrollTop = 0; // always scroll to top when opening
+  }
 }
 function closeMobWorm(){
-  document.getElementById('worm-overlay').style.display='none';
-  document.getElementById('worm-sheet').classList.remove('is-open');
+  const overlay = document.getElementById('worm-overlay');
+  const sheet   = document.getElementById('worm-sheet');
+  if(overlay) overlay.style.display = 'none';
+  if(sheet)   sheet.classList.remove('is-open');
+  // Return to Meso tab after closing
+  document.querySelectorAll('.mob-tab[data-tab]').forEach(t=>t.classList.remove('active'));
+  const mesoTab = document.querySelector('.mob-tab[data-tab="meso"]');
+  if(mesoTab) mesoTab.classList.add('active');
+  // Ensure db-card visible
+  if(window.innerWidth < 960){
+    const db = document.querySelector('.db-card');
+    if(db) db.style.display = '';
+  }
 }
 
 /* ─────────────────────────────────────────
@@ -1239,19 +1439,26 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('adv-grid').innerHTML=buildFilterHTML('adv');
   document.getElementById('drawer-filter-body').innerHTML=buildFilterHTML('drawer');
 
-  // Mobile init — show macro, hide db/micro panels (handled by tabs)
-  if(window.innerWidth<960){
-    document.querySelector('.db-card').style.display='none';
-    document.getElementById('micro-card').style.display='none';
-  }
-  window.addEventListener('resize',()=>{
-    if(window.innerWidth>=960){
-      document.querySelector('.db-card').style.display='';
-      document.getElementById('micro-card').style.display='flex';
-      document.getElementById('micro-card').classList.remove('mob-visible');
-      const macroSec=document.getElementById('macro-section');
-      if(macroSec&&S.view==='all') macroSec.style.display='';
+  // Mobile init — start on Macro tab
+  function applyMobileLayout(){
+    if(window.innerWidth < 960){
+      // Restore tab state, or default to macro
+      mobTab(S.mobTab || 'macro');
+    } else {
+      // Desktop: ensure all panels visible
+      const db = document.querySelector('.db-card');
+      const mc = document.getElementById('micro-card');
+      const ms = document.getElementById('macro-section');
+      if(db) db.style.display = '';
+      if(mc){ mc.style.display='flex'; mc.classList.remove('mob-visible'); }
+      if(ms && S.view==='all') ms.style.display = '';
     }
+  }
+  applyMobileLayout();
+  let resizeTimer;
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyMobileLayout, 80);
   });
 
   // Search enter key
@@ -1263,18 +1470,15 @@ document.addEventListener('DOMContentLoaded',()=>{
   update();
   initMap();
 
-  // Auto-select first study
-  if(RAW.length>0){
-    const firstId=RAW[0].id;
-    S.selId=firstId;
-    const p=RAW[0];
-    const html=buildMicroHTML(p);
-    document.getElementById('micro-body').innerHTML=html;
-    // Highlight first row (will render after table renders)
-    setTimeout(()=>{
-      const firstRow=document.querySelector('#table-body tr');
-      if(firstRow) firstRow.classList.add('row-selected');
-    },50);
+  // Auto-select first study on load
+  if(RAW.length > 0){
+    S.selId = RAW[0].id;
+    const html = buildMicroHTML(RAW[0]);
+    const microBody = document.getElementById('micro-body');
+    if(microBody) microBody.innerHTML = html;
+    // worm sheet body also pre-populated for mobile
+    const sheetBody = document.getElementById('worm-sheet-body');
+    if(sheetBody) sheetBody.innerHTML = html;
   }
 });
 </script>
